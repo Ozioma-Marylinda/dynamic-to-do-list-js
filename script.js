@@ -22,46 +22,42 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Create <li> element and set its text safely
-        const li = document.createElement("li");
-        li.appendChild(document.createTextNode(taskText));
+        if (taskText !== "") {
 
-        // Create Remove button
-        const removeBtn = document.createElement("button");
-        removeBtn.textContent = "Remove";
-        removeBtn.className = "remove-btn";
+            // Create li
+            const li = document.createElement("li");
+            li.textContent = taskText;
 
-        // Remove task when button is clicked (use addEventListener + li.remove())
-        removeBtn.addEventListener("click", () => {
-            li.remove();
-        });
+            // Create remove button
+            const removeBtn = document.createElement("button");
+            removeBtn.textContent = "Remove";
+            removeBtn.className = "remove-btn";
 
-        // Attach remove button to li
-        li.appendChild(removeBtn);
+            // Remove li when remove button is clicked
+            removeBtn.onclick = function () {
+                taskList.removeChild(li);
+            };
 
-        // Add li to the task list
-        taskList.appendChild(li);
+            // Append remove button to li
+            li.appendChild(removeBtn);
 
-        // Clear input
-        taskInput.value = "";
-        taskInput.focus();
+            // Append li to task list
+            taskList.appendChild(li);
+
+            // Clear input field
+            taskInput.value = "";
     }
 
-    // -------------------------------
-    // Attach Event Listeners
-    // -------------------------------
 
-    // Click Add Task button
+    // Add click event to Add Task button
     addButton.addEventListener("click", addTask);
 
-    // Press Enter key to add task — use keydown and preventDefault to avoid form submit
-    taskInput.addEventListener("keydown", (event) => {
+
+    // Add Enter key support
+    taskInput.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
-            event.preventDefault();
             addTask();
         }
     });
 
-    // NOTE: Do not call addTask() on load (it would try to add an empty task).
 });
-
