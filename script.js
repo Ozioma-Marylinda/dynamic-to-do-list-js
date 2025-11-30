@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------------------------------
     // Select DOM Elements
     // -------------------------------
-    const addButton = document.getElementById("addButton"); // Add Task button
+    const addButton = document.getElementById("add-task-btn"); // Add Task button
     const taskInput = document.getElementById("task-input"); // Input field
     const taskList = document.getElementById("task-list");   // Task list (ul)
 
