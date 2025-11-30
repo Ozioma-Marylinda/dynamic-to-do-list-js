@@ -22,19 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Create <li> element
+        // Create <li> element and set its text safely
         const li = document.createElement("li");
-        li.textContent = taskText;
+        li.appendChild(document.createTextNode(taskText));
 
         // Create Remove button
         const removeBtn = document.createElement("button");
         removeBtn.textContent = "Remove";
         removeBtn.className = "remove-btn";
 
-        // Remove task when button is clicked
-        removeBtn.onclick = () => {
-            taskList.removeChild(li);
-        };
+        // Remove task when button is clicked (use addEventListener + li.remove())
+        removeBtn.addEventListener("click", () => {
+            li.remove();
+        });
 
         // Attach remove button to li
         li.appendChild(removeBtn);
@@ -44,8 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Clear input
         taskInput.value = "";
+        taskInput.focus();
     }
-
 
     // -------------------------------
     // Attach Event Listeners
@@ -54,15 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Click Add Task button
     addButton.addEventListener("click", addTask);
 
-    // Press Enter key to add task
-    taskInput.addEventListener("keypress", (event) => {
+    // Press Enter key to add task — use keydown and preventDefault to avoid form submit
+    taskInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
+            event.preventDefault();
             addTask();
         }
     });
 
-    // Invoke addTask on DOMContentLoaded (as instructed)
-    addTask();
-
+    // NOTE: Do not call addTask() on load (it would try to add an empty task).
 });
 
